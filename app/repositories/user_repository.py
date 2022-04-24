@@ -1,5 +1,3 @@
-"""Repositories module."""
-
 from typing import Iterator
 
 from app.models import User
@@ -21,9 +19,9 @@ class UserRepository:
                 raise UserNotFoundError(user_id)
             return user
 
-    def add(self, email: str, password: str, is_active: bool = True) -> User:
+    def add(self, email: str, name: str, public_id: str, is_admin: bool = False) -> User:
         with self.session_factory() as session:
-            user = User(email=email, hashed_password=password, is_active=is_active)
+            user = User(email=email, name=name, public_id=public_id, is_admin=is_admin)
             session.add(user)
             session.commit()
             session.refresh(user)

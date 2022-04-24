@@ -10,7 +10,8 @@ router = APIRouter()
 
 class User(BaseModel):
     email: str
-    password: str
+    name: str
+    is_admin: bool
 
 
 @router.get('/')
