@@ -1,3 +1,7 @@
+#ignore local db files
+*.db
+#ignore pycharm
+.idea
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
