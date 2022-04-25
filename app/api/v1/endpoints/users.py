@@ -11,7 +11,7 @@ router = APIRouter()
 class User(BaseModel):
     email: str
     name: str
-    is_admin: bool
+    is_admin: bool = False
 
 
 @router.get('/')
