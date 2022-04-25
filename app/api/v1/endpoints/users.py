@@ -16,13 +16,14 @@ class User(BaseModel):
 
 @router.get('/')
 @inject
-async def get_all_users(user_service: UserService = Depends(Provide[Container.user_service])):
+def get_all_users(user_service: UserService = Depends(Provide["user_service"])):
     return user_service.get_users()
 
 
-@router.get('/{user_id}')
-def get_user_by_id(user_id: str):
-    pass
+@router.get('/{public_id}')
+@inject
+def get_user_by_id(public_id: str, user_service: UserService = Depends(Provide[Container.user_service])):
+    return user_service.get_user_by_id(public_id)
 
 
 @router.post('/', status_code=status.HTTP_201_CREATED)

@@ -10,11 +10,11 @@ def create_app() -> FastAPI:
     db = container.db()
     db.create_database()
 
-    app = FastAPI()
-    app.container = container
-    app.include_router(api_router, prefix='/v1', tags=['V1'])
+    _app = FastAPI()
+    _app.container = container
+    _app.include_router(api_router, prefix='/v1', tags=['V1'])
 
-    return app
+    return _app
 
 
 app = create_app()

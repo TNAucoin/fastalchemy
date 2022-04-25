@@ -10,7 +10,7 @@ class Todo(Base):
     name = Column(String(20), nullable=False)
     is_completed = Column(Boolean, default=False)
     public_id = Column(String, nullable=False)
-    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
+    user_id = Column(Integer, ForeignKey('users.public_id'), nullable=False)
 
     def __repr__(self):
         return f"Todo <{self.name}>"

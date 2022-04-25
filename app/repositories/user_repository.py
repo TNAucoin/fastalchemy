@@ -1,6 +1,6 @@
 from typing import Iterator
 
-from app.models import User
+from app.models.user_model import User
 
 
 class UserRepository:
@@ -12,11 +12,11 @@ class UserRepository:
         with self.session_factory() as session:
             return session.query(User).all()
 
-    def get_by_id(self, user_id: int) -> User:
+    def get_by_id(self, public_id: str) -> User:
         with self.session_factory() as session:
-            user = session.query(User).filter(User.id == user_id).first()
+            user = session.query(User).filter(User.public_id == public_id).first()
             if not user:
-                raise UserNotFoundError(user_id)
+                raise UserNotFoundError(public_id)
             return user
 
     def add(self, email: str, name: str, public_id: str, is_admin: bool = False) -> User:

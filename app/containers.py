@@ -1,7 +1,5 @@
 from dependency_injector import containers, providers
 from dependency_injector.providers import Singleton, Factory
-
-from app.api.v1.endpoints import users
 from app.database import Database
 from app.repositories import UserRepository, TodoRepository
 from app.services import UserService, TodoService
@@ -32,7 +30,7 @@ def create_todo_service(db: Singleton[Database]) -> Factory[TodoService]:
 
 
 class Container(containers.DeclarativeContainer):
-    wiring_config = containers.WiringConfiguration(modules=[users])
+    wiring_config = containers.WiringConfiguration(modules=[".api.v1.endpoints.users", ".api.v1.endpoints.todos"])
     config = providers.Configuration(yaml_files=["config.yml"])
     db = providers.Singleton(Database, db_url=config.db.url)
     todo_service = create_todo_service(db)

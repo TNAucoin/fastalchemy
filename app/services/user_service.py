@@ -1,7 +1,7 @@
 from typing import Iterator
 from uuid import uuid4
 
-from app.models import User
+from app.models.user_model import User
 from app.repositories import UserRepository
 
 
@@ -13,8 +13,8 @@ class UserService:
     def get_users(self) -> Iterator[User]:
         return self._repository.get_all()
 
-    def get_user_by_id(self, user_id: int) -> User:
-        return self._repository.get_by_id(user_id)
+    def get_user_by_id(self, public_id: str) -> User:
+        return self._repository.get_by_id(public_id)
 
     def create_user(self, email: str, name: str, is_admin: bool = False) -> User:
         uid = str(uuid4())
