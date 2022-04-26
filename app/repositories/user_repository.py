@@ -1,6 +1,8 @@
 from typing import Iterator
 
+from app.models.todo_model import Todo
 from app.models.user_model import User
+from app.repositories.exceptions import UserNotFoundError
 
 
 class UserRepository:
@@ -29,19 +31,15 @@ class UserRepository:
 
     def delete_by_id(self, user_id: int) -> None:
         with self.session_factory() as session:
-            entity: User = session.query(User).filter(User.id == user_id).first()
-            if not entity:
+            user: User = session.query(User).filter(User.id == user_id).first()
+            if not user:
                 raise UserNotFoundError(user_id)
-            session.delete(entity)
+            session.delete(user)
             session.commit()
 
-
-class NotFoundError(Exception):
-    entity_name: str
-
-    def __init__(self, entity_id):
-        super().__init__(f"{self.entity_name} not found, id: {entity_id}")
-
-
-class UserNotFoundError(NotFoundError):
-    entity_name: str = "User"
+    def get_user_todos(self, public_id: str) -> Iterator[Todo]:
+        with self.session_factory() as session:
+            user: User = session.query(User).filter(User.public_id == public_id).first()
+            if not user:
+                raise UserNotFoundError(public_id)
+            return user.todos.all()

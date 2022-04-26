@@ -22,3 +22,6 @@ class UserService:
 
     def delete_user_by_id(self, user_id: int) -> None:
         return self._repository.delete_by_id(user_id)
+
+    def get_user_todos(self, public_id: str):
+        return self._repository.get_user_todos(public_id)
